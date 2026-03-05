@@ -1,11 +1,70 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-    <title>Spring Security Example</title>
+    <title>Личный кабинет пользователя</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        .user-info { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .btn-logout {
+            background-color: #f44343;
+        }
+        table { width: 100%; }
+        td { padding: 10px; }
+        .label { font-weight: bold; width: 150px; }
+    </style>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
+<div class="container">
+    <h1>Личный кабинет пользователя</h1>
 
+    <div class="user-info">
+        <h2>Ваши данные</h2>
+        <table>
+            <tr>
+                <td class="label">ID:</td>
+                <td th:text="${user.id}"></td>
+            </tr>
+            <tr>
+                <td class="label">Имя:</td>
+                <td th:text="${user.name}"></td>
+            </tr>
+            <tr>
+                <td class="label">Фамилия:</td>
+                <td th:text="${user.lastName}"></td>
+            </tr>
+            <tr>
+                <td class="label">Возраст:</td>
+                <td th:text="${user.age}"></td>
+            </tr>
+            <tr>
+                <td class="label">Логин:</td>
+                <td th:text="${user.username}"></td>
+            </tr>
+            <tr>
+                <td class="label">Роли:</td>
+                <td th:text="${user.roles}"></td>
+            </tr>
+        </table>
+    </div>
 
+    <!-- Кнопка выхода -->
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-logout">Выйти</button>
+    </form>
+
+    <!-- Кнопка возврата на главную (опционально) -->
+    <a th:href="@{/}" class="btn" style="background-color: #666;">На главную</a>
+</div>
 </body>
 </html>

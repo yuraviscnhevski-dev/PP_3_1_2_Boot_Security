@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактировать пользователя</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 50px; }
+    .form-container {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #008CBA;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="form-container">
+  <h2>Редактировать пользователя</h2>
+
+  <form th:action="@{/admin/edit/{id}(id=${user.id})}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <div>
+      <label>Имя:</label>
+      <input type="text" th:field="*{name}" required/>
+    </div>
+
+    <div>
+      <label>Фамилия:</label>
+      <input type="text" th:field="*{lastName}" required/>
+    </div>
+
+    <div>
+      <label>Возраст:</label>
+      <input type="number" th:field="*{age}" required/>
+    </div>
+
+    <div>
+      <label>Логин (username):</label>
+      <input type="text" th:field="*{username}" required/>
+    </div>
+
+    <div>
+      <label>Новый пароль (оставьте пустым, если не хотите менять):</label>
+      <input type="password" th:field="*{password}" placeholder="Оставьте пустым для сохранения старого"/>
+    </div>
+
+    <div>
+      <label>Роли:</label>
+      <select multiple th:field="*{roles}">
+        <option value="ROLE_ADMIN">ADMIN</option>
+        <option value="ROLE_USER">USER</option>
+      </select>
+      <small>Для выбора нескольких ролей держи Ctrl/Cmd</small>
+    </div>
+
+    <button type="submit">Сохранить</button>
+    <a th:href="@{/admin}" style="margin-left: 10px;">Отмена</a>
+  </form>
+</div>
+</body>
+</html>
