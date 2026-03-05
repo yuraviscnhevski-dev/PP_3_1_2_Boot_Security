@@ -41,7 +41,7 @@
 <div class="login-form">
   <h2>Вход в систему</h2>
 
-  <!-- Блок для отображения ошибки, если параметр error есть в URL -->
+  <!-- Блок для отображения ошибки -->
   <div th:if="${param.error}" class="error">
     Неверный логин или пароль!
   </div>
@@ -51,8 +51,11 @@
     Вы успешно вышли из системы.
   </div>
 
-  <!-- Форма входа (action должно быть /login, method="post") -->
+  <!-- ФОРМА ВХОДА С CSRF-ТОКЕНОМ -->
   <form action="/login" method="post">
+    <!-- Скрытое поле для CSRF-токена (обязательно!) -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
     <div>
       <input type="text" name="username" placeholder="Имя пользователя" required autofocus/>
     </div>
