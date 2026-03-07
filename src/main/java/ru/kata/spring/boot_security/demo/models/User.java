@@ -5,11 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {  // Проверь, что implements UserDetails!
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,7 @@ public class User implements UserDetails {  // Проверь, что implements
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -48,7 +49,6 @@ public class User implements UserDetails {  // Проверь, что implements
         this.password = password;
     }
 
-    // Геттеры и сеттеры
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -67,7 +67,6 @@ public class User implements UserDetails {  // Проверь, что implements
     public void setUsername(String username) { this.username = username; }
     public void setPassword(String password) { this.password = password; }
 
-    // Реализация методов UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -101,5 +100,18 @@ public class User implements UserDetails {  // Проверь, что implements
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
