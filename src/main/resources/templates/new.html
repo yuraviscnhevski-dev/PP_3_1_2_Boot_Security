@@ -32,6 +32,15 @@
     <input type="password" th:field="*{password}" required/>
   </div>
 
+  <!-- Блок выбора ролей -->
+  <div>
+    <label>Roles:</label>
+    <div th:each="role : ${allRoles}">
+      <input type="checkbox" name="roleIds" th:value="${role.id}" />
+      <span th:text="${role.name}"></span>
+    </div>
+  </div>
+
   <button type="submit">Save</button>
   <a href="/admin">Cancel</a>
 </form>

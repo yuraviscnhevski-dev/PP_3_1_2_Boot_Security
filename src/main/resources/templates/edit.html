@@ -34,6 +34,16 @@
     <input type="password" th:field="*{password}" placeholder="Leave empty to keep current"/>
   </div>
 
+  <!-- Блок выбора ролей с предвыбором -->
+  <div>
+    <label>Roles:</label>
+    <div th:each="role : ${allRoles}">
+      <input type="checkbox" name="roleIds" th:value="${role.id}"
+             th:checked="${user.roles.contains(role)}" />
+      <span th:text="${role.name}"></span>
+    </div>
+  </div>
+
   <button type="submit">Update</button>
   <a href="/admin">Cancel</a>
 </form>
